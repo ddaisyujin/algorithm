@@ -6,7 +6,7 @@
 <br>
 
 ## 학습 리스트 ( with. 알고리즘 트레이닝 책 )
-1. Dynamic Programming(시작: 2021-01-12)  
+1. Dynamic Programming (p. 75) (시작: 2021-01-12)  
 2. 탐색 (p.56)  
 3. 그래프 (p.91)  
 4. 고급 그래프 (p.227)  
