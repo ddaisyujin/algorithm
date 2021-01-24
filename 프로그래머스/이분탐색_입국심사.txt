@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+long long solution(int n, vector<int> times) {
+    long long answer = 0;
+    
+    long long l=1;
+    long long r=1e18; // r사이즈를 충분히 크게 해줘라
+    long long m, cnt=0;
+    
+    while(l<=r)
+    {
+        m=(l+r)/2;
+        cnt=0;
+        
+        for(int i=0; i<times.size(); i++){
+            cnt += m/times[i];
+        }
+        
+        if(cnt>=n)   r=m-1; //같을 때도 왼쪽으로 이동해야한다.  왜냐? m은 평균값이니까! 최소로 fit하게 하려면.. 왼쪽으로 이동
+        else  l=m+1;
+    }
+    
+    return l; //l값이.... ... . .. .
+}
