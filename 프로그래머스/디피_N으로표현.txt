@@ -1,0 +1,46 @@
+// 문제가 너무 어렵다 도륵
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
+int solution(int N, int number) {
+    int answer = -1;
+    
+    //N, NN, NNN, ...
+    int base=0;
+    unordered_set<int> s[8];
+    
+    for(int i=0;i<8;i++)
+    {
+        base = 10*base + 1; // 1, 11, 111
+        s[i].insert(base*N);
+    }
+    
+    
+    //가능한 계산 조합
+    for(int i=0; i<8; i++)
+    {
+        // 1 n-1 / 2 n-2 / ... / n-2 2 / n-1 1
+        for(int j=0;j<i; j++) 
+        {
+            for(auto& x1:s[j])
+            {
+                for(auto& x2:s[i-j-1])
+                {
+                    s[i].insert(x1+x2);
+                    s[i].insert(x1-x2);
+                    s[i].insert(x1*x2);
+                    if(x2!=0)
+                        s[i].insert(x1/x2);
+                    
+                }
+            }
+        }
+        if(s[i].find(number)!=s[i].end())   return i+1;
+    }
+    
+    
+    
+    return answer;
+}

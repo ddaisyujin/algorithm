@@ -1,0 +1,26 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool cmp(int n1, int n2)
+{
+    string x1=to_string(n1) + to_string(n2);
+    string x2=to_string(n2) + to_string(n1);
+    
+    return x1 > x2;
+}
+
+string solution(vector<int> numbers) {
+    string answer = "";
+    
+    sort(numbers.begin(),numbers.end(), cmp);
+    
+    for(auto& x:numbers)
+    {
+        answer += to_string(x);
+    }
+    
+    return answer[0] =='0'?  "0" : answer;
+}

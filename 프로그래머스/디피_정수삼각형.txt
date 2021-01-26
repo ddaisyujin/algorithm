@@ -1,0 +1,53 @@
+/*
+
+0:     ㅇ
+1:    ㅇㅇ
+2:   ㅇㅇㅇ
+
+- triangle가 이렇게 있으면,
+
+0:     ㅇ
+1:    ㅁㅇ
+2:   ㅇㅇㅇ	(a[0] = triangle[0][0])
+
+- 1번째 line부터 시작(triangle[1][0]), 위를 보면서 계산
+
+0:    0ㅇ0
+1:    ㅁㅇ
+2:   ㅇㅇㅇ
+
+- 계산의 편리성을 위해 빈공간을 0으로 패딩
+
+0:   ㅇ₁ㅇ₂ㅇ
+1:    ㅁㅇ
+2:   ㅇㅇㅇ
+
+- ㅁ+ㅇ₁ 과 ㅁ+ㅇ₂ 중 더 값이 큰 것을 ㅁ의 값으로 선택!
+
+*/
+
+#include <algorithm> // max_element
+#include <vector>
+
+using namespace std;
+
+int solution(vector<vector<int>> triangle) {
+    int answer = 0;
+
+    // DP
+    for(int i=1;i<triangle.size();i++) 
+    {
+        triangle[i-1].insert(triangle[i-1].begin(),0); // 0으로 패딩 (좌)
+        triangle[i-1].push_back(0); // 0으로 패딩 (우)
+
+        for(int j=0; j<triangle[i-1].size();j++)
+        {
+            triangle[i][j]=max(triangle[i][j]+triangle[i-1][j], triangle[i][j]+triangle[i-1][j+1]); // 값비교
+        }
+    }
+    
+    
+    answer= *max_element(triangle.back().begin(),triangle.back().end());
+
+    return answer;
+}
