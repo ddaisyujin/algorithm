@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	int N; scanf("%d", &N);
+	
+	//0 1 2 3 4 5 6 7 8 9
+	vector<vector<int>> arr;
+	arr.push_back({ 1,1,1,1,1,1,1,1,1,1 }); //a1
+
+	vector<int> temp;
+	int division = 10007;
+	for (int i = 1; i < N; i++) // 이전 행 훑기 a1 a2 a3 a4
+	{
+		temp.clear();
+		for (int k = 0; k < 10; k++) // 열을 좌르르륵 훑기 0 1 2 3 4 5 6 7 8 9
+		{
+			if (k == 0)	temp.push_back(1);
+			else
+			{
+				temp.push_back((temp.back() + arr[i - 1][k])%division);
+			}
+		}
+		arr.push_back(temp);
+	}
+
+	int sum = 0;
+	for (auto& x : arr.back())
+	{
+		sum = (sum+x)%division;
+	}
+
+	printf("%d",sum);
+}
