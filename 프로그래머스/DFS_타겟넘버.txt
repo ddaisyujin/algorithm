@@ -1,0 +1,53 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int solution(vector<int> numbers, int target) {
+	int answer = 0;
+	int size = 0;
+
+	vector<vector<int>> cases; // 모든 조합
+	cases.push_back({ numbers[0] * 1, numbers[0] * (-1) }); 
+
+	vector<int> temp;
+	for (int i = 1; i < numbers.size(); i++)
+	{
+		temp.clear();
+		for (int j = 0; j < cases[i-1].size(); j++)
+		{
+			temp.push_back(cases[i - 1][j] + numbers[i]); // numbers[i]를 각 요소마다 더해주고 빼주고
+			temp.push_back(cases[i - 1][j] - numbers[i]);
+		}
+		cases.push_back(temp);
+	}
+
+	answer = count(cases.back().begin(), cases.back().end(), target); //target과 같은 값을 count!
+
+	return answer;
+}
+
+
+#if 0
+#include <vector>
+
+using namespace std;
+
+int solution(vector<int> numbers, int target) {
+    int answer = 0;
+    int size = 1 << numbers.size(); // 일어날 수 있는 모든 경우의 수는 2^(number의 길이)
+
+    for(int i = 1 ; i < size ; i++){
+        int temp = 0;
+        for(int j = 0 ; j < numbers.size() ; j++)
+        {  
+            if(i &(1 << j)){ // <☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+                temp -= numbers[j]; //true가 나는 자리에 있는 값만 빼주겠다.
+            }
+            else temp += numbers[j];
+        }
+        if(temp == target) answer++;
+    }
+    return answer;
+}
+#endif
