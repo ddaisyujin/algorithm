@@ -1,0 +1,35 @@
+#include <string>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+
+long long answer = 0;
+vector<long long> sum;
+
+void DFS(vector<vector<long long>>& g, int cur, int parent){
+    
+    for(int i=0;i<g[cur].size();i++){
+        if(g[cur][i]!=parent)   
+            DFS(g, g[cur][i], cur);
+    }
+    // leaf에 도착
+    sum[parent] += sum[cur];
+    answer += abs(sum[cur]);
+}
+
+long long solution(vector<int> a, vector<vector<int>> edges) {
+    
+    vector<vector<long long>> graph(a.size());
+    for(auto _a:a)  sum.push_back(_a);
+    
+    for(auto& e: edges){
+        graph[e[0]].push_back(e[1]);
+        graph[e[1]].push_back(e[0]);
+    }
+    
+    DFS(graph, 0, 0);
+    
+    if(sum[0]==0)   return answer;
+    else    return -1;
+}
